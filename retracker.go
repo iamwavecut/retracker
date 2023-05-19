@@ -86,9 +86,9 @@ func announceHandler(w http.ResponseWriter, r *http.Request) {
 		swarms[infoHash] = sw
 	}
 
-	peer := &peer{ID: peerID, IP: host, Port: port, LastSeen: time.Now().Unix()}
+	p := &peer{ID: peerID, IP: host, Port: port, LastSeen: time.Now().Unix()}
 	sw.Mutex.Lock()
-	sw.Peers[peerID] = peer
+	sw.Peers[peerID] = p
 	sw.Mutex.Unlock()
 	log.Println("Announced:", hex.EncodeToString([]byte(infoHash)), peerID, host, port)
 
@@ -103,7 +103,7 @@ func announceHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "text/plain")
 	for _, p := range peers {
-		w.Write([]byte(p + "\n"))
+		_ = tool.Err(w.Write([]byte(p + "\n")))
 	}
 }
 
