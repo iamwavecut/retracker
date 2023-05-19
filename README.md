@@ -1,5 +1,5 @@
 # retracker
-Simple local torrent tracker
+Simple local http torrent tracker written in Go
 
 ## Install by 
 ```go
